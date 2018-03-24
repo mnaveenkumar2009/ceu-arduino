@@ -1,11 +1,12 @@
 include Makefile.dirs
 
+CEU_DIR=$/home/naveen/ceu/
 CEU_SRC ?= samples/blink-01.ceu
 CEU_ISR ?= false
 
 INO_SRC ?= env/env.ino
 
-ARD_EXE = arduino
+ARD_EXE = /home/naveen/Downloads/arduino-1.8.5/arduino
 ARD_ARCH  = avr
 ARD_BOARD = uno
 ARD_PORT  = /dev/ttyACM*
