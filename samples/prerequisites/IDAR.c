@@ -8,7 +8,7 @@ Objective :
     The user's score and the correctness of the answer are displayed.
     Each turn a new random number is generated.
     
-Circuit : https://www.tinkercad.com/things/91BmknNjFda-test
+Circuit : https://www.tinkercad.com/things/91BmknNjFda
         : IDAR.png
 
 Circuit Details :
