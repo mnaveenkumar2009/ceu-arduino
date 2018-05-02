@@ -1,0 +1,56 @@
+#include "arduino/arduino.ceu"
+#include "wclock.ceu"
+#include "spi.ceu"
+#include "nrf24l01.ceu"
+#include "rf24-network.ceu"
+#include "pcint0.ceu"
+
+{
+    Serial.begin(9600);
+    delay(1000);
+    Serial.println("RF24Network/examples/helloworld_rx/");
+}
+
+native/plain _payload_t;
+native/pre do
+    //##include <SPI.h>
+    //##include <RF24.h>
+    //RF24 radio(8,7);                // nRF24L01(+) radio attached using Getting Started board
+
+    const uint16_t this_node = 01;    // Address of our node in Octal format ( 04,031, etc)
+    const uint16_t other_node = 0;   // Address of the other node in Octal format
+
+    typedef struct payload_t {                 // Structure of our payload
+        unsigned long ms;
+        unsigned long counter;
+    } payload_t;
+
+    static RF24Network__Header header;        // If so, grab it and print it out
+    static payload_t payload;
+end
+
+var Lock spi = _;
+spawn Spi();
+
+event bool irq;
+spawn PCInt_to_Event(10, false, &irq);
+
+var Nrf24l01_ nrf = val Nrf24l01_(&spi, &irq, 8,7, _,_,_,_,_,_,_);
+spawn Nrf24l01(&nrf);
+await nrf.ok;
+
+var RF24Network_ net = val RF24Network_(&nrf,{this_node},_,_,_,_,_,_);
+spawn RF24Network(&net, 90);
+await net.ok;
+
+every net.rx do
+    var _RF24Network__Header&& header = &&net.buf[0] as _RF24Network__Header&&;
+    var _payload_t&& payload = &&net.buf[0 + sizeof(_RF24Network__Header)] as _payload_t&&;
+    {
+        Serial.print("RX #");
+        Serial.print(@(payload:counter));
+        Serial.print(" at ");
+        Serial.println(@(payload:ms));
+        _DELAY(20);
+    }
+end
