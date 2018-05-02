@@ -1,7 +1,8 @@
-#define ceu_assert_ex(a,b,c)
+#define CEU_ARDUINO_ASSERT          // numeric assert
+//#define ceu_assert_ex(a,b,c)      // no assert
 
 #if ARDUINO_ARCH_AVR
-    #define CEU_STACK_MAX  750
+    #define CEU_STACK_MAX  200
 #elif ARDUINO_ARCH_SAMD
     #define CEU_STACK_MAX 1000
 #else
@@ -17,22 +18,44 @@
         }                               \
     }
 
-// Set SLEEP always.
-// Currently, if ISR is set, but not ISR_SLEEP, the timer will not work well
-// because `ceu_timer_request` is called every tick and intermediary ticks are
-// lost due to prescaling.
-//#ifdef CEU_FEATURES_ISR
-//#define CEU_FEATURES_ISR_SLEEP
-//#endif
+#ifdef CEU_ARDUINO_ASSERT
+#define ceu_assert_ex(a,b,c) if (a == 0) { ceu_arduino_halt((int)b); }
+void ceu_arduino_halt (int v);
+#endif
 
-// TODO: w/ this comment, all programs will allocate `ceu_pm_state`
-// how to pass to arduino command line an additional definition?
-#ifdef CEU_FEATURES_ISR_SLEEP
-#include "types.h"
-#include "pm.c.h"
+#ifdef CEU_FEATURES_ISR
+    #ifdef CEU_FEATURES_ISR_SLEEP
+        #include "types.h"
+        #include "pm.c.h"
+    #else
+        // Set SLEEP always.
+        // Currently, if ISR is set, but not ISR_SLEEP, the timer will not work well
+        // because `ceu_timer_request` is called every tick and intermediary ticks are
+        // lost due to prescaling.
+        #error "Invalid option!"
+    #endif
 #endif
 
 #include "_ceu_app.c.h"
+
+#ifdef CEU_ARDUINO_ASSERT
+void ceu_arduino_halt (int v) {
+    if (v<1 || v>10) { v=1; }
+    noInterrupts();
+    pinMode(13, OUTPUT);
+    digitalWrite(13, 1);
+    for (;;) {
+        for (int j=0; j<v; j++) {
+            _DELAY(150);
+            digitalWrite(13, 0);
+            _DELAY(150);
+            digitalWrite(13, 1);
+        }
+        _DELAY(1000);
+    }
+    interrupts();
+}
+#endif
 
 #ifdef CEU_FEATURES_ISR
     #include "wiring_private.h"
@@ -120,9 +143,10 @@ static int ceu_callback_arduino (int cmd, tceu_callback_val p1, tceu_callback_va
         case CEU_CALLBACK_ISR_ATTACH: {
             tceu_isr* isr = (tceu_isr*) p1.ptr;
             int* args = (int*) p2.ptr;
-            if (args[0] < EXTERNAL_NUM_INTERRUPTS) {
-                attachInterrupt(args[0], (void(*)())(isr->fun), args[1]);    /* TODO: no mem */
-            } else {
+            //if (args[0] < EXTERNAL_NUM_INTERRUPTS) {
+                //attachInterrupt(args[0], (void(*)())(isr->fun), args[1]);    /* TODO: no mem */
+            //} else
+            {
                 isrs[args[0]] = *isr;
             }
             break;
@@ -234,7 +258,7 @@ _CEU_ARDUINO_AWAKE_:;
 #endif
     }
     ceu_stop();
-    ceu_assert_ex(0, "bug found", CEU_TRACE_null);
+    ceu_assert_ex(0, 10, CEU_TRACE_null);
     while (1);
 }
 
