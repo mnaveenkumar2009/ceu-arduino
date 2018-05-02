@@ -44,4 +44,9 @@
 
 ### `[30-Apr]` What did I do last week?
 
+- Finished Reading the Papers on Céu assigned.
+- Updated the repository with the original.
+- Joined Mailing list.
+- Scheduled Tasks on reading about I2C for the following week
+
 `(1-2 small paragraphs for each of the planned tasks)`
