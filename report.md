@@ -49,4 +49,11 @@
 - Joined Mailing list.
 - Scheduled Tasks on reading about I2C for the following week
 
-`(1-2 small paragraphs for each of the planned tasks)`
+### `[30-Apr]` What will I do this week?
+
+- Read about I2C
+    - https://learn.sparkfun.com/tutorials/i2c
+- Use I2C to communicate between arduinos
+    - make them talk using the standard API in C available
+    - make them talk using ISRs in C
+    - make them talk using ISRs in Céu
