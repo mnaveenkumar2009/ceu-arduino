@@ -1,13 +1,14 @@
 -------------------------------------------------------------------------------
-`[30-Apr] -> [06-May]`
+`[07-May] -> [13-May]`
 -------------------------------------------------------------------------------
 
-### `[30-Apr]` What did I do last week?
+### `[07-May]` What will I do this week?
 
-- Finished Reading the Papers on Céu assigned.
-- Updated the repository with the original.
-- Joined Mailing list.
-- Scheduled Tasks on reading about I2C for the following week
+### `[14-May]` What did I do last week?
+
+-------------------------------------------------------------------------------
+`[30-Apr] -> [06-May]`
+-------------------------------------------------------------------------------
 
 ### `[30-Apr]` What will I do this week?
 
@@ -17,6 +18,10 @@
     - make them talk using the standard API in C available
     - make them talk using ISRs in C
     - make them talk using ISRs in Céu
+
+### `[07-May]` What did I do last week?
+
+
 -------------------------------------------------------------------------------
 `[23-Apr] -> [29-Apr]`
 -------------------------------------------------------------------------------
@@ -54,3 +59,10 @@
         - https://stackoverflow.com/questions/7244321/how-do-i-update-a-github-forked-repository
 
 - Be proactive! Suggest and discuss tasks with mentor
+
+### `[30-Apr]` What did I do last week?
+
+- Finished Reading the Papers on Céu assigned.
+- Updated the repository with the original.
+- Joined Mailing list.
+- Scheduled Tasks on reading about I2C for the following week
