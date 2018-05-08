@@ -21,6 +21,9 @@
 
 ### `[07-May]` What did I do last week?
 
+- Read about I2C
+- Used I2C to communicate between arduinos with the standard API available in C
+- Scheduled the remaining tasks for the upcoming week (Making arduinos talk using ISRs)
 
 -------------------------------------------------------------------------------
 `[23-Apr] -> [29-Apr]`
