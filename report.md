@@ -4,6 +4,9 @@
 
 ### `[07-May]` What will I do this week?
 
+- Use I2C to communicate between arduinos using ISRs
+- Read about I2C and ATmega datasheets and find the differences
+
 ### `[14-May]` What did I do last week?
 
 -------------------------------------------------------------------------------
